@@ -1,0 +1,10 @@
+{
+	"apps": [
+		{
+			"name": "E-ID: Crawl",
+			"script": "node dist/console.js crawl",
+			"instances": 1,
+			"time": true
+		}
+	]
+}

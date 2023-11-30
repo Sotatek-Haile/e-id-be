@@ -1,0 +1,36 @@
+version: '3.7'
+
+services:
+  # e-id-be:
+  #   container_name: e-id-be
+  #   build: .
+  #   ports:
+  #     - 30000:3000
+  #   networks:
+  #     - e-id-network
+
+  # e-id-be-crawl:
+  #   container_name: e-id-be-crawl
+  #   build: .
+  #   command: pm2-runtime --json pm2-process.json
+  #   networks:
+  #     - e-id-network
+
+  e-id-mongo:
+    image: mongo:7.0.2-jammy
+    container_name: e-id-mongo
+    ports:
+      - 27017:27017
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=e-id
+      - MONGO_INITDB_ROOT_PASSWORD=secret
+      - MONGO_INITDB_DATABASE=e-id-user
+    volumes:
+      - ./data/mongodb:/data/db
+    networks:
+      - e-id-network
+
+networks:
+  e-id-network:
+    external: false

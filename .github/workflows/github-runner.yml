@@ -1,0 +1,21 @@
+name: drift-zone-user-runner
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  deploy-development:
+    name: Deploy development
+    runs-on: self-hosted
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v3
+      - name: Copy file
+        run: rsync -azh --exclude={.git,.github,.env,dist,node_modules,docker,data} --delete ./ ~/drift-zone/backend/user
+      - name: Run build
+        run: |
+          cd ~/drift-zone/backend/user
+          docker compose up -d --build
