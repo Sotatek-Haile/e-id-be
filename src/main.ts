@@ -26,15 +26,15 @@ async function bootstrap(): Promise<void> {
 	// app.useGlobalFilters(new AllExceptionsFilter());
 	app.setGlobalPrefix(appConfigObj.prefixUrl);
 
-	if (appConfigObj.swagger.user && appConfigObj.swagger.password) {
-		app.use(
-			[appConfigObj.swagger.path],
-			basicAuth({
-				challenge: true,
-				users: { [appConfigObj.swagger.user]: appConfigObj.swagger.password },
-			}),
-		);
-	}
+	// if (appConfigObj.swagger.user && appConfigObj.swagger.password) {
+	// 	app.use(
+	// 		[appConfigObj.swagger.path],
+	// 		basicAuth({
+	// 			challenge: true,
+	// 			users: { [appConfigObj.swagger.user]: appConfigObj.swagger.password },
+	// 		}),
+	// 	);
+	// }
 	app.use(helmet());
 	const options = new DocumentBuilder()
 		.setTitle(appConfigObj.swagger.title)
