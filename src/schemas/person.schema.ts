@@ -18,14 +18,17 @@ export class Person {
 	@Prop({ type: Number, required: false })
 	score: number;
 
-	@Prop({ type: Number, required: true })
+	@Prop({ type: Number, required: false })
 	gender: EGenderType;
 
-	@Prop({ type: Date, required: true, default: Date.now })
+	@Prop({ type: Date, required: false })
 	dateOfBirth?: Date;
 
-	@Prop({ type: String, required: true })
+	@Prop({ type: String, required: false })
 	ownerAddress: string;
+
+	@Prop({ type: String, required: false })
+	sensitiveInformation: string;
 }
 
 export const PersonSchema = SchemaFactory.createForClass(Person);

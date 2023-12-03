@@ -4,6 +4,7 @@ import type { EventData } from 'web3-eth-contract';
 
 import { crawlConfig } from '~/config/crawl.config';
 import { PersonRepository } from '~/repositories/person.repository';
+import { ScoreHistoryRepository } from '~/repositories/score-history.repository';
 import { ELatestBlockType } from '~/schemas/latest-block.schema';
 import { BaseCrawlerConsole } from '~/shares/base/base-crawler.console';
 import { PersonCrawler } from '~/shares/crawler/person.crawler';
@@ -14,7 +15,10 @@ import { UpdateLatestBlock } from '~/shares/decorators/crawler.decorator';
 export class PersonConsole extends BaseCrawlerConsole {
 	protected readonly blockType: ELatestBlockType = ELatestBlockType.PERSON;
 
-	constructor(private readonly personRepository: PersonRepository) {
+	constructor(
+		private readonly personRepo: PersonRepository,
+		private readonly scoreHistoryRepo: ScoreHistoryRepository,
+	) {
 		super();
 	}
 
@@ -31,7 +35,7 @@ export class PersonConsole extends BaseCrawlerConsole {
 	}
 
 	@UpdateLatestBlock
-	private async handleCrawlPerson(events: EventData[]): Promise<void[]> {
+	private async handleCrawlPerson(events: EventData[]): Promise<void> {
 		console.log(events);
 		for (const event of events) {
 			switch (event.event) {
@@ -39,21 +43,25 @@ export class PersonConsole extends BaseCrawlerConsole {
 					await this.handleNewPerson(event);
 					break;
 			}
+
+			switch (event.event) {
+				case 'EditPerson':
+					await this.handleEditPerson(event);
+					break;
+			}
+
+			switch (event.event) {
+				case 'ScoreChange':
+					await this.handleScoreChange(event);
+					break;
+			}
 		}
-		return Promise.all(
-			events.map(event => {
-				// this.adminRepo.findOneOrCreateByWalletAddress(event.returnValues.account);
-				console.log(event);
-			}),
-		);
 	}
 
 	async handleNewPerson(event: EventData): Promise<void> {
 		const { tokenId, owner: ownerAddress, newPerson } = event.returnValues;
-		console.log({ tokenId, ownerAddress, newPerson });
-		console.log(newPerson[5], newPerson[6], newPerson[7], newPerson.name);
 		try {
-			await this.personRepository.create({
+			await this.personRepo.create({
 				name: newPerson.name,
 				gender: +newPerson.gender,
 				age: +newPerson.age,
@@ -63,6 +71,48 @@ export class PersonConsole extends BaseCrawlerConsole {
 			});
 		} catch (error) {
 			console.error('handleNewPerson failed ', error, event.returnValues);
+		}
+	}
+
+	async handleEditPerson(event: EventData): Promise<void> {
+		console.log(event.returnValues);
+		const { tokenId, newPerson } = event.returnValues;
+		try {
+			await this.personRepo.updateOne(
+				{
+					tokenId,
+				},
+				{
+					$set: {
+						name: newPerson.name,
+						gender: +newPerson.gender,
+						age: +newPerson.age,
+						score: +newPerson.score,
+						sensitiveInformation: newPerson.sensitiveInformation,
+					},
+				},
+			);
+		} catch (error) {
+			console.error('handleEditPerson failed ', error, event.returnValues);
+		}
+	}
+
+	async handleScoreChange(event: EventData): Promise<void> {
+		console.log(event.returnValues);
+		const { tokenId, score } = event.returnValues;
+
+		const person = await this.personRepo.findOne({ tokenId });
+
+		const oldScore = person.score || 0;
+
+		try {
+			await this.scoreHistoryRepo.create({
+				tokenId: tokenId,
+				amount: +score - oldScore,
+				score: +score,
+			});
+		} catch (error) {
+			console.error('handleEditPerson failed ', error, event.returnValues);
 		}
 	}
 }

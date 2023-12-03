@@ -5,6 +5,12 @@
 			"script": "node dist/console.js crawl:person",
 			"instances": 1,
 			"time": true
+		},
+		{
+			"name": "E-ID: Crawl Organization",
+			"script": "node dist/console.js crawl:organization",
+			"instances": 1,
+			"time": true
 		}
 	]
 }
