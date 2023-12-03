@@ -11,6 +11,8 @@ RUN yarn
 
 COPY . .
 
+COPY .env.docker .env
+
 RUN yarn build
 
 CMD ["node", "dist/main.js"]

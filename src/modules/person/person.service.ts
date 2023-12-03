@@ -28,4 +28,8 @@ export class PersonService {
 			...data,
 		});
 	}
+
+	async getPersonDetail(tokenId: string): Promise<any> {
+		return this.personRepository.getPersonDetail(tokenId);
+	}
 }

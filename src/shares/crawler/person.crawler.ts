@@ -84,7 +84,7 @@ export class PersonCrawler extends BaseIntervalWorker {
 		const contractConfig = this.crawlConfig.contracts.person;
 
 		const contract = new this.web3.eth.Contract(contractConfig.abi, contractConfig.address);
-		const events = await contract.getPastEvents('allEvent', {
+		const events = await contract.getPastEvents('allEvents', {
 			fromBlock,
 			toBlock,
 		});

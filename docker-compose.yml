@@ -1,20 +1,20 @@
 version: '3.7'
 
 services:
-  # e-id-be:
-  #   container_name: e-id-be
-  #   build: .
-  #   ports:
-  #     - 30000:3000
-  #   networks:
-  #     - e-id-network
+  e-id-be:
+    container_name: e-id-be
+    build: .
+    ports:
+      - 3001:3001
+    networks:
+      - e-id-network
 
-  # e-id-be-crawl:
-  #   container_name: e-id-be-crawl
-  #   build: .
-  #   command: pm2-runtime --json pm2-process.json
-  #   networks:
-  #     - e-id-network
+  e-id-be-crawl:
+    container_name: e-id-be-crawl
+    build: .
+    command: pm2-runtime --json pm2-process.json
+    networks:
+      - e-id-network
 
   e-id-mongo:
     image: mongo:7.0.2-jammy

@@ -60,13 +60,28 @@ export const personAbi = [
 						type: 'string',
 					},
 					{
-						internalType: 'string',
-						name: 'taxCode',
-						type: 'string',
+						internalType: 'uint256',
+						name: 'gender',
+						type: 'uint256',
+					},
+					{
+						internalType: 'uint256',
+						name: 'age',
+						type: 'uint256',
+					},
+					{
+						internalType: 'uint256',
+						name: 'score',
+						type: 'uint256',
+					},
+					{
+						internalType: 'bytes',
+						name: 'sensitiveInformation',
+						type: 'bytes',
 					},
 				],
 				indexed: false,
-				internalType: 'struct IOrganization.OrganizationInfo',
+				internalType: 'struct IPerson.PersonInfo',
 				name: 'newPerson',
 				type: 'tuple',
 			},
@@ -83,7 +98,7 @@ export const personAbi = [
 				type: 'uint256',
 			},
 		],
-		name: 'EditOrganization',
+		name: 'EditPerson',
 		type: 'event',
 	},
 	{
@@ -123,13 +138,28 @@ export const personAbi = [
 						type: 'string',
 					},
 					{
-						internalType: 'string',
-						name: 'taxCode',
-						type: 'string',
+						internalType: 'uint256',
+						name: 'gender',
+						type: 'uint256',
+					},
+					{
+						internalType: 'uint256',
+						name: 'age',
+						type: 'uint256',
+					},
+					{
+						internalType: 'uint256',
+						name: 'score',
+						type: 'uint256',
+					},
+					{
+						internalType: 'bytes',
+						name: 'sensitiveInformation',
+						type: 'bytes',
 					},
 				],
 				indexed: false,
-				internalType: 'struct IOrganization.OrganizationInfo',
+				internalType: 'struct IPerson.PersonInfo',
 				name: 'newPerson',
 				type: 'tuple',
 			},
@@ -146,7 +176,32 @@ export const personAbi = [
 				type: 'uint256',
 			},
 		],
-		name: 'NewOrganization',
+		name: 'NewPerson',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: false,
+				internalType: 'address',
+				name: 'owner',
+				type: 'address',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: 'tokenId',
+				type: 'uint256',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: 'score',
+				type: 'uint256',
+			},
+		],
+		name: 'ScoreChange',
 		type: 'event',
 	},
 	{
@@ -173,6 +228,24 @@ export const personAbi = [
 		],
 		name: 'Transfer',
 		type: 'event',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: 'tokenId',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: 'score',
+				type: 'uint256',
+			},
+		],
+		name: 'addScore',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
 	},
 	{
 		inputs: [
@@ -239,12 +312,27 @@ export const personAbi = [
 						type: 'string',
 					},
 					{
-						internalType: 'string',
-						name: 'taxCode',
-						type: 'string',
+						internalType: 'uint256',
+						name: 'gender',
+						type: 'uint256',
+					},
+					{
+						internalType: 'uint256',
+						name: 'age',
+						type: 'uint256',
+					},
+					{
+						internalType: 'uint256',
+						name: 'score',
+						type: 'uint256',
+					},
+					{
+						internalType: 'bytes',
+						name: 'sensitiveInformation',
+						type: 'bytes',
 					},
 				],
-				internalType: 'struct IOrganization.OrganizationInfo',
+				internalType: 'struct IPerson.PersonInfo',
 				name: 'p',
 				type: 'tuple',
 			},
@@ -361,12 +449,27 @@ export const personAbi = [
 						type: 'string',
 					},
 					{
-						internalType: 'string',
-						name: 'taxCode',
-						type: 'string',
+						internalType: 'uint256',
+						name: 'gender',
+						type: 'uint256',
+					},
+					{
+						internalType: 'uint256',
+						name: 'age',
+						type: 'uint256',
+					},
+					{
+						internalType: 'uint256',
+						name: 'score',
+						type: 'uint256',
+					},
+					{
+						internalType: 'bytes',
+						name: 'sensitiveInformation',
+						type: 'bytes',
 					},
 				],
-				internalType: 'struct IOrganization.OrganizationInfo',
+				internalType: 'struct IPerson.PersonInfo',
 				name: 'p',
 				type: 'tuple',
 			},
@@ -393,30 +496,6 @@ export const personAbi = [
 		inputs: [
 			{
 				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		name: 'organizationInfo',
-		outputs: [
-			{
-				internalType: 'string',
-				name: 'name',
-				type: 'string',
-			},
-			{
-				internalType: 'string',
-				name: 'taxCode',
-				type: 'string',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
 				name: 'tokenId',
 				type: 'uint256',
 			},
@@ -427,6 +506,45 @@ export const personAbi = [
 				internalType: 'address',
 				name: '',
 				type: 'address',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		name: 'personInfo',
+		outputs: [
+			{
+				internalType: 'string',
+				name: 'name',
+				type: 'string',
+			},
+			{
+				internalType: 'uint256',
+				name: 'gender',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: 'age',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: 'score',
+				type: 'uint256',
+			},
+			{
+				internalType: 'bytes',
+				name: 'sensitiveInformation',
+				type: 'bytes',
 			},
 		],
 		stateMutability: 'view',
@@ -497,6 +615,24 @@ export const personAbi = [
 			},
 		],
 		name: 'setApprovalForAll',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: 'tokenId',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: 'score',
+				type: 'uint256',
+			},
+		],
+		name: 'subtractScore',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -575,4 +711,4 @@ export const personAbi = [
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
-];
+] as const;

@@ -6,7 +6,7 @@ export type PersonDocument = Person & Document;
 
 @Schema({ collection: 'persons', timestamps: true, toJSON: { getters: true } })
 export class Person {
-	@Prop({ type: Number, required: true, unique: true })
+	@Prop({ type: String, required: true, unique: true })
 	tokenId: string;
 
 	@Prop({ type: String, required: true })
@@ -23,6 +23,9 @@ export class Person {
 
 	@Prop({ type: Date, required: true, default: Date.now })
 	dateOfBirth?: Date;
+
+	@Prop({ type: String, required: true })
+	ownerAddress: string;
 }
 
 export const PersonSchema = SchemaFactory.createForClass(Person);
@@ -30,6 +33,7 @@ PersonSchema.plugin(leanGettersPlugin);
 
 PersonSchema.index({ name: 1 });
 PersonSchema.index({ tokenId: 1 }, { unique: true });
+PersonSchema.index({ ownerAddress: 1 }, { unique: true });
 
 export enum EGenderType {
 	MALE = 1,

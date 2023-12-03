@@ -2,7 +2,6 @@ import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import basicAuth from 'express-basic-auth';
 import * as httpContext from 'express-http-context';
 import helmet from 'helmet';
 
@@ -26,15 +25,6 @@ async function bootstrap(): Promise<void> {
 	// app.useGlobalFilters(new AllExceptionsFilter());
 	app.setGlobalPrefix(appConfigObj.prefixUrl);
 
-	// if (appConfigObj.swagger.user && appConfigObj.swagger.password) {
-	// 	app.use(
-	// 		[appConfigObj.swagger.path],
-	// 		basicAuth({
-	// 			challenge: true,
-	// 			users: { [appConfigObj.swagger.user]: appConfigObj.swagger.password },
-	// 		}),
-	// 	);
-	// }
 	app.use(helmet());
 	const options = new DocumentBuilder()
 		.setTitle(appConfigObj.swagger.title)
