@@ -9,11 +9,14 @@ export class ScoreHistory {
 	@Prop({ type: String, required: true, unique: true })
 	tokenId: string;
 
-	@Prop({ type: String, required: true })
+	@Prop({ type: String, required: false })
 	name: string;
 
 	@Prop({ type: Number, required: true })
 	amount: number;
+
+	@Prop({ type: Number, required: false })
+	score: number;
 }
 
 export const ScoreHistorySchema = SchemaFactory.createForClass(ScoreHistory);

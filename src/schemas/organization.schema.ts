@@ -8,8 +8,14 @@ export class Organization {
 	@Prop({ type: String, required: true })
 	name: string;
 
-	@Prop({ type: String, required: true })
+	@Prop({ type: String, required: false })
 	taxCode: string;
+
+	@Prop({ type: String, required: false })
+	ownerAddress: string;
+
+	@Prop({ type: String, required: false })
+	tokenId: string;
 }
 
 export const OrganizationSchema = SchemaFactory.createForClass(Organization);
