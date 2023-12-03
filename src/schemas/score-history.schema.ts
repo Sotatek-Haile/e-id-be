@@ -6,8 +6,8 @@ export type ScoreHistoryDocument = ScoreHistory & Document;
 
 @Schema({ collection: 'score-history', timestamps: true, toJSON: { getters: true } })
 export class ScoreHistory {
-	@Prop({ type: Number, required: true, unique: true })
-	tokenId: number;
+	@Prop({ type: String, required: true, unique: true })
+	tokenId: string;
 
 	@Prop({ type: String, required: true })
 	name: string;
@@ -20,4 +20,4 @@ export const ScoreHistorySchema = SchemaFactory.createForClass(ScoreHistory);
 ScoreHistorySchema.plugin(leanGettersPlugin);
 
 ScoreHistorySchema.index({ name: 1 });
-ScoreHistorySchema.index({ tokenId: 1 }, { unique: true });
+ScoreHistorySchema.index({ tokenId: 1 });

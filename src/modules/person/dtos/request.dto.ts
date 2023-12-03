@@ -6,6 +6,10 @@ import { EGenderType } from '~/schemas/person.schema';
 export class CreatePersonRequestDto {
 	@ApiProperty()
 	@IsString()
+	tokenId: string;
+
+	@ApiProperty()
+	@IsString()
 	name: string;
 
 	@ApiProperty()
@@ -19,8 +23,8 @@ export class CreatePersonRequestDto {
 
 export class PersonEvent {
 	@ApiProperty()
-	@IsNumber()
-	tokenId: number;
+	@IsString()
+	tokenId: string;
 
 	@ApiProperty()
 	@IsString()

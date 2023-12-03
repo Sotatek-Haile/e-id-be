@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
 import { HttpResponseSuccess } from '~/shares/decorators/http-response.decorator';
@@ -28,5 +28,10 @@ export class PersonController {
 	@Post(':id/event')
 	addPersonEvent(@Body() body: PersonEvent): Promise<void> {
 		return this.personService.addPersonEvent(body);
+	}
+
+	@Get('detail/:id')
+	getPersonDetail(@Param('id') tokenId: string): Promise<any> {
+		return this.personService.getPersonDetail(tokenId);
 	}
 }

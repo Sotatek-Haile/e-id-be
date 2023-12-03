@@ -1,8 +1,8 @@
 {
 	"apps": [
 		{
-			"name": "E-ID: Crawl",
-			"script": "node dist/console.js crawl",
+			"name": "E-ID: Crawl Person",
+			"script": "node dist/console.js crawl:person",
 			"instances": 1,
 			"time": true
 		}

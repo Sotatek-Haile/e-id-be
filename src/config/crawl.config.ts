@@ -16,17 +16,17 @@ export const crawlConfig: ICrawlConfig = {
 	contracts: {
 		manager: {
 			address: process.env.MANAGER_ADDRESS,
-			firstCrawlBlock: Number(process.env.REFERRAL_FIRST_CRAWL_BLOCK),
+			firstCrawlBlock: Number(process.env.MANAGER_FIRST_CRAWL_BLOCK),
 			abi: managerAbi,
 		},
 		organization: {
 			address: process.env.ORGANIZATION_ADDRESS,
-			firstCrawlBlock: Number(process.env.STAKE_FIRST_CRAWL_BLOCK),
+			firstCrawlBlock: Number(process.env.ORGANIZATION_FIRST_CRAWL_BLOCK),
 			abi: organizationAbi,
 		},
 		person: {
 			address: process.env.PERSON_ADDRESS,
-			firstCrawlBlock: Number(process.env.BLACKLIST_FIRST_CRAWL_BLOCK),
+			firstCrawlBlock: Number(process.env.PERSON_FIRST_CRAWL_BLOCK),
 			abi: personAbi,
 		},
 	},
