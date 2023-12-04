@@ -14,7 +14,7 @@ async function bootstrap(): Promise<void> {
 	const appConfigObj = configService.get('app');
 
 	app.use(httpContext.middleware);
-	app.enableCors();
+	// app.enableCors();
 	app.use(setCorrelationId);
 
 	app.useGlobalPipes(
@@ -25,7 +25,7 @@ async function bootstrap(): Promise<void> {
 	// app.useGlobalFilters(new AllExceptionsFilter());
 	app.setGlobalPrefix(appConfigObj.prefixUrl);
 
-	app.use(helmet());
+	// app.use(helmet());
 	const options = new DocumentBuilder()
 		.setTitle(appConfigObj.swagger.title)
 		.setDescription(appConfigObj.swagger.description)
