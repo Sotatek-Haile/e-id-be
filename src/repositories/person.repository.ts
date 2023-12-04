@@ -4,9 +4,9 @@ import { MongoRepository } from '~/shares/decorators/repository.decorator';
 
 @MongoRepository(Person, PersonSchema)
 export class PersonRepository extends BaseRepository<Person> {
-	getPersonDetail(tokenId: string): Promise<any> {
+	getPersonDetail(personAddress: string): Promise<any> {
 		const aggregate = this.model.aggregate([
-			{ $match: { tokenId } },
+			{ $match: { ownerAddress: personAddress } },
 			{
 				$lookup: {
 					from: 'score-history',
@@ -17,6 +17,6 @@ export class PersonRepository extends BaseRepository<Person> {
 			},
 		]);
 
-		return aggregate.exec();
+		return this.aggregateGetOne(aggregate);
 	}
 }

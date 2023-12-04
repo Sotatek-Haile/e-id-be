@@ -25,13 +25,13 @@ export class PersonController {
 		return this.personService.createPerson(body);
 	}
 
-	@Post(':id/event')
-	addPersonEvent(@Body() body: PersonEvent): Promise<void> {
-		return this.personService.addPersonEvent(body);
-	}
+	// @Post(':id/event')
+	// addPersonEvent(@Body() body: PersonEvent): Promise<void> {
+	// 	return this.personService.addPersonEvent(body);
+	// }
 
-	@Get('detail/:id')
-	getPersonDetail(@Param('id') tokenId: string): Promise<any> {
-		return this.personService.getPersonDetail(tokenId);
+	@Get('detail/:personAddress')
+	getPersonDetail(@Param('personAddress') personAddress: string): Promise<any> {
+		return this.personService.getPersonDetail(personAddress);
 	}
 }
