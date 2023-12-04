@@ -19,8 +19,9 @@ services:
   e-id-mongo:
     image: mongo:7.0.2-jammy
     container_name: e-id-mongo
+    command: mongod --port 27018
     ports:
-      - 27017:27017
+      - 27018:27018
     restart: always
     environment:
       - MONGO_INITDB_ROOT_USERNAME=e-id
