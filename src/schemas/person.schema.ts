@@ -9,6 +9,9 @@ export class Person {
 	@Prop({ type: String, required: true, unique: true })
 	tokenId: string;
 
+	@Prop({ type: String, required: false })
+	organizationId: string;
+
 	@Prop({ type: String, required: true })
 	name: string;
 
@@ -28,7 +31,13 @@ export class Person {
 	ownerAddress: string;
 
 	@Prop({ type: String, required: false })
-	sensitiveInformation: string;
+	sensitiveInformation?: string;
+
+	@Prop({ type: String, required: false })
+	address?: string;
+
+	@Prop({ type: String, required: false })
+	uid?: string;
 }
 
 export const PersonSchema = SchemaFactory.createForClass(Person);

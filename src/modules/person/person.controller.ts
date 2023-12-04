@@ -3,7 +3,7 @@ import { ApiTags } from '@nestjs/swagger';
 
 import { HttpResponseSuccess } from '~/shares/decorators/http-response.decorator';
 
-import { CreatePersonRequestDto, PersonEvent } from './dtos/request.dto';
+import { CreatePersonRequestDto } from './dtos/request.dto';
 import { PersonResponse } from './dtos/response.dto';
 import { PersonService } from './person.service';
 
@@ -25,13 +25,13 @@ export class PersonController {
 		return this.personService.createPerson(body);
 	}
 
-	@Post(':id/event')
-	addPersonEvent(@Body() body: PersonEvent): Promise<void> {
-		return this.personService.addPersonEvent(body);
-	}
+	// @Post(':id/event')
+	// addPersonEvent(@Body() body: PersonEvent): Promise<void> {
+	// 	return this.personService.addPersonEvent(body);
+	// }
 
-	@Get('detail/:id')
-	getPersonDetail(@Param('id') tokenId: string): Promise<any> {
-		return this.personService.getPersonDetail(tokenId);
+	@Get('detail/:personAddress')
+	getPersonDetail(@Param('personAddress') personAddress: string): Promise<any> {
+		return this.personService.getPersonDetail(personAddress);
 	}
 }

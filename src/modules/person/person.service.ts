@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 
 import { PersonRepository } from '~/repositories/person.repository';
 import { ScoreHistoryRepository } from '~/repositories/score-history.repository';
@@ -29,7 +29,11 @@ export class PersonService {
 		});
 	}
 
-	async getPersonDetail(tokenId: string): Promise<any> {
-		return this.personRepository.getPersonDetail(tokenId);
+	async getPersonDetail(personAddress: string): Promise<any> {
+		const person = await this.personRepository.getPersonDetail(personAddress);
+
+		if (!person) throw new BadRequestException({ message: 'Person not found' });
+
+		return person;
 	}
 }

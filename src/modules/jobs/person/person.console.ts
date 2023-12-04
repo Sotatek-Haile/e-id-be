@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { ethers } from 'ethers';
 import { Command, Console } from 'nestjs-console';
 import type { EventData } from 'web3-eth-contract';
 
@@ -60,22 +61,41 @@ export class PersonConsole extends BaseCrawlerConsole {
 
 	async handleNewPerson(event: EventData): Promise<void> {
 		const { tokenId, owner: ownerAddress, newPerson } = event.returnValues;
-		try {
-			await this.personRepo.create({
-				name: newPerson.name,
-				gender: +newPerson.gender,
-				age: +newPerson.age,
-				score: +newPerson.score,
-				tokenId,
-				ownerAddress,
+		const abi = [
+			'string', // UID (cccd)
+			'string', // bod
+			'string', // user address
+			'string', // company id
+		];
+
+		const person = {
+			name: newPerson.name,
+			gender: +newPerson.gender,
+			age: +newPerson.age,
+			score: +newPerson.score,
+			tokenId,
+			ownerAddress,
+			sensitiveInformation: newPerson.sensitiveInformation,
+		};
+
+		if (newPerson.sensitiveInformation) {
+			const decodedData = ethers.AbiCoder.defaultAbiCoder().decode(abi, newPerson.sensitiveInformation);
+			Object.assign(person, {
+				uid: decodedData[0],
+				dateOfBirth: decodedData[1],
+				address: decodedData[2],
+				organizationId: decodedData[3] === '0x' ? null : decodedData[3],
 			});
+		}
+
+		try {
+			await this.personRepo.create(person);
 		} catch (error) {
 			console.error('handleNewPerson failed ', error, event.returnValues);
 		}
 	}
 
 	async handleEditPerson(event: EventData): Promise<void> {
-		console.log(event.returnValues);
 		const { tokenId, newPerson } = event.returnValues;
 		try {
 			await this.personRepo.updateOne(
@@ -98,7 +118,6 @@ export class PersonConsole extends BaseCrawlerConsole {
 	}
 
 	async handleScoreChange(event: EventData): Promise<void> {
-		console.log(event.returnValues);
 		const { tokenId, score } = event.returnValues;
 
 		const person = await this.personRepo.findOne({ tokenId });

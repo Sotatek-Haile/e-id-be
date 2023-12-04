@@ -4,19 +4,39 @@ import { MongoRepository } from '~/shares/decorators/repository.decorator';
 
 @MongoRepository(Person, PersonSchema)
 export class PersonRepository extends BaseRepository<Person> {
-	getPersonDetail(tokenId: string): Promise<any> {
+	getPersonDetail(personAddress: string): Promise<any> {
 		const aggregate = this.model.aggregate([
-			{ $match: { tokenId } },
+			{ $match: { ownerAddress: personAddress } },
 			{
 				$lookup: {
 					from: 'score-history',
 					localField: 'tokenId',
 					foreignField: 'tokenId',
 					as: 'history',
+					pipeline: [
+						{
+							$lookup: {
+								from: 'milestones',
+								localField: 'amount',
+								foreignField: 'score',
+								as: 'name',
+							},
+						},
+						{
+							$addFields: {
+								name: { $arrayElemAt: ['$name', 0] },
+							},
+						},
+						{
+							$addFields: {
+								name: '$name.name',
+							},
+						},
+					],
 				},
 			},
 		]);
 
-		return aggregate.exec();
+		return this.aggregateGetOne(aggregate);
 	}
 }
