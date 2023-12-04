@@ -14,7 +14,7 @@ export class PersonService {
 	) {}
 
 	getAllPeople(): Promise<Person[]> {
-		return this.personRepository.find();
+		return this.personRepository.getAllPeople();
 	}
 
 	async createPerson(data: CreatePersonRequestDto): Promise<void> {
