@@ -14,7 +14,7 @@ async function bootstrap(): Promise<void> {
 	const appConfigObj = configService.get('app');
 
 	app.use(httpContext.middleware);
-	// app.enableCors();
+	app.enableCors();
 	app.use(setCorrelationId);
 
 	app.useGlobalPipes(
