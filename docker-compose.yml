@@ -5,7 +5,7 @@ services:
     container_name: e-id-be
     build: .
     ports:
-      - 3002:3002
+      - 3122:3122
     networks:
       - e-id-network
 
