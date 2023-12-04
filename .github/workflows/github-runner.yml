@@ -14,8 +14,8 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v3
       - name: Copy file
-        run: rsync -azh --exclude={.git,.github,.env,dist,node_modules,docker,data} --delete ./ ~/e-id/backend/user
+        run: rsync -azh --exclude={.git,.github,.env,dist,node_modules,docker,data} --delete ./ ~/e-id/backend
       - name: Run build
         run: |
-          cd ~/e-id/backend/user
+          cd ~/e-id/backend
           docker compose up -d --build
