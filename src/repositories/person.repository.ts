@@ -13,6 +13,26 @@ export class PersonRepository extends BaseRepository<Person> {
 					localField: 'tokenId',
 					foreignField: 'tokenId',
 					as: 'history',
+					pipeline: [
+						{
+							$lookup: {
+								from: 'milestones',
+								localField: 'amount',
+								foreignField: 'score',
+								as: 'name',
+							},
+						},
+						{
+							$addFields: {
+								name: { $arrayElemAt: ['$name', 0] },
+							},
+						},
+						{
+							$addFields: {
+								name: '$name.name',
+							},
+						},
+					],
 				},
 			},
 		]);
