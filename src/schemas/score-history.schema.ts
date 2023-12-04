@@ -6,7 +6,7 @@ export type ScoreHistoryDocument = ScoreHistory & Document;
 
 @Schema({ collection: 'score-history', timestamps: true, toJSON: { getters: true } })
 export class ScoreHistory {
-	@Prop({ type: String, required: true, unique: true })
+	@Prop({ type: String, required: true })
 	tokenId: string;
 
 	@Prop({ type: String, required: false })
