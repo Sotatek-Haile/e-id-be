@@ -3,7 +3,7 @@ name: e-id
 on:
   push:
     branches:
-      - develop
+      - master
 
 jobs:
   deploy-development:
