@@ -131,6 +131,16 @@ export class PersonConsole extends BaseCrawlerConsole {
 				score: +score,
 				milestoneId: +sId,
 			});
+			await this.personRepo.updateOne(
+				{
+					tokenId,
+				},
+				{
+					$set: {
+						score: +score,
+					},
+				},
+			);
 		} catch (error) {
 			console.error('handleEditPerson failed ', error, event.returnValues);
 		}
