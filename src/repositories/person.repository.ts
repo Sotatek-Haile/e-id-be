@@ -17,19 +17,14 @@ export class PersonRepository extends BaseRepository<Person> {
 						{
 							$lookup: {
 								from: 'milestones',
-								localField: 'amount',
-								foreignField: 'score',
-								as: 'name',
+								localField: 'milestoneId',
+								foreignField: 'id',
+								as: 'milestone',
 							},
 						},
 						{
 							$addFields: {
-								name: { $arrayElemAt: ['$name', 0] },
-							},
-						},
-						{
-							$addFields: {
-								name: '$name.name',
+								milestone: { $arrayElemAt: ['$milestone', 0] },
 							},
 						},
 					],

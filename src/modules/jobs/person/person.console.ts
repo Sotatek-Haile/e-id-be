@@ -118,17 +118,18 @@ export class PersonConsole extends BaseCrawlerConsole {
 	}
 
 	async handleScoreChange(event: EventData): Promise<void> {
-		const { tokenId, score } = event.returnValues;
+		const { tokenId, score, sId } = event.returnValues;
 
 		const person = await this.personRepo.findOne({ tokenId });
 
-		const oldScore = person.score || 0;
+		const oldScore = person?.score || 0;
 
 		try {
 			await this.scoreHistoryRepo.create({
 				tokenId: tokenId,
 				amount: +score - oldScore,
 				score: +score,
+				milestoneId: +sId,
 			});
 		} catch (error) {
 			console.error('handleEditPerson failed ', error, event.returnValues);

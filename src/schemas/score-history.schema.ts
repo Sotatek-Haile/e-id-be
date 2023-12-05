@@ -17,6 +17,9 @@ export class ScoreHistory {
 
 	@Prop({ type: Number, required: false })
 	score: number;
+
+	@Prop({ type: Number, required: false })
+	milestoneId: number;
 }
 
 export const ScoreHistorySchema = SchemaFactory.createForClass(ScoreHistory);
