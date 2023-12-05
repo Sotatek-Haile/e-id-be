@@ -14,9 +14,11 @@ export class MilestoneService {
 	}
 
 	async addMileStone(data: CreateMileStoneRequestDto): Promise<void> {
+		const randomNumber = Math.ceil(Math.random() * 1000);
 		await this.milestoneRepository.create({
 			name: data.name,
 			score: data.score,
+			id: Date.now() * 1000 + randomNumber,
 		});
 	}
 

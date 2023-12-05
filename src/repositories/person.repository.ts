@@ -17,26 +17,54 @@ export class PersonRepository extends BaseRepository<Person> {
 						{
 							$lookup: {
 								from: 'milestones',
-								localField: 'amount',
-								foreignField: 'score',
-								as: 'name',
+								localField: 'milestoneId',
+								foreignField: 'id',
+								as: 'milestone',
 							},
 						},
 						{
 							$addFields: {
-								name: { $arrayElemAt: ['$name', 0] },
-							},
-						},
-						{
-							$addFields: {
-								name: '$name.name',
+								milestone: { $arrayElemAt: ['$milestone', 0] },
 							},
 						},
 					],
 				},
 			},
+			{
+				$lookup: {
+					from: 'organizations',
+					localField: 'organizationId',
+					foreignField: 'tokenId',
+					as: 'organization',
+				},
+			},
+			{
+				$addFields: {
+					organization: { $arrayElemAt: ['$organization', 0] },
+				},
+			},
 		]);
 
 		return this.aggregateGetOne(aggregate);
+	}
+
+	getAllPeople(): Promise<any> {
+		const aggregate = this.model.aggregate([
+			{
+				$lookup: {
+					from: 'organizations',
+					localField: 'organizationId',
+					foreignField: 'tokenId',
+					as: 'organization',
+				},
+			},
+			{
+				$addFields: {
+					organization: { $arrayElemAt: ['$organization', 0] },
+				},
+			},
+		]);
+
+		return aggregate.exec();
 	}
 }

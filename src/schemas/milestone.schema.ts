@@ -5,6 +5,9 @@ export type MilestoneDocument = Milestone & Document;
 
 @Schema({ collection: 'milestones', timestamps: true })
 export class Milestone {
+	@Prop({ type: Number, required: true })
+	id: number;
+
 	@Prop({ type: String, required: true })
 	name: string;
 
